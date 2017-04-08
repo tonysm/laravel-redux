@@ -7,20 +7,16 @@ import {
 
 import Example from './Example';
 import About from './About';
+import store from '../store';
 
 export default class App extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            title: 'Lorem'
-        };
-    }
-
     updateTitle(changes) {
-        this.setState({
-            title: changes.title + ' ' + Math.floor(Math.random() * 10000)
-        });
+        if (store.title !== changes.title) {
+            store.dispatch({
+                type: 'UPDATE_TITLE',
+                title: changes.title
+            });
+        }
     }
 
     render() {
@@ -34,8 +30,8 @@ export default class App extends Component {
 
                     <hr/>
 
-                    <Route exact path="/home" render={() => <Example title={this.state.title} onChange={this.updateTitle.bind(this)} />}/>
-                    <Route path="/home/about" render={() => <About title={this.state.title} />}/>
+                    <Route exact path="/home" render={() => <Example {...store.getState()} onChange={this.updateTitle.bind(this)} />}/>
+                    <Route path="/home/about" render={() => <About {...store.getState()} />}/>
                 </div>
             </Router>
         );

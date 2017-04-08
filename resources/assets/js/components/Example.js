@@ -19,14 +19,6 @@ export default class Example extends Component {
         }
     }
 
-    componentWillReceiveProps(newProps) {
-        if (newProps.title !== this.state.title) {
-            this.setState({
-                title: newProps.title
-            });
-        }
-    }
-
     render() {
         return (
             <div className="container">
